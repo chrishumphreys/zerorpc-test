@@ -6,4 +6,4 @@ ADD ./client.py /
 ENV clientport 4242
 ENV host 127.0.0.1
 
-CMD [ "sh", "-c", "python ./client.py --port=$clientport --method=simple --host=$host" ]
+CMD [ "sh", "-c", "python ./client.py --port=$clientport --method=simple --host=$host --stdout" ]

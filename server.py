@@ -3,6 +3,7 @@
 import zerorpc
 import logging
 import argparse
+import sys
 
 class HelloRPC(object):
     def hello(self, name):
@@ -24,9 +25,15 @@ class HelloRPC(object):
 parser = argparse.ArgumentParser(description='Simple RPC server')
 parser.add_argument('--port', nargs='?', default=4242, type=int)
 parser.add_argument('--host', nargs='?', default="0.0.0.0", type=str)
+parser.add_argument('--stdout', action="store_true", help="Log all output to stdout rather than log file. Useful for docker.")
+
 args = parser.parse_args()
 
-logging.basicConfig(filename='server.log',level=logging.DEBUG)
+if args.stdout:
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+else:
+    logging.basicConfig(filename='server.log',level=logging.DEBUG)
+
 s = zerorpc.Server(HelloRPC())
 bind_addr = "tcp://{}:{}".format(args.host, args.port)
 print("binding server to {}".format(bind_addr))
