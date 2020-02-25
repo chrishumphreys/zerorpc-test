@@ -1,5 +1,8 @@
-FROM python:3
+FROM python:3.8-slim-buster
 LABEL description="ZeroRPC server"
+
+RUN apt-get update
+RUN apt-get -y install build-essential
 
 RUN pip install zerorpc
 ADD ./server.py /
