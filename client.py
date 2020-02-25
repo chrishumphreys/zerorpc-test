@@ -7,11 +7,12 @@ import argparse
 parser = argparse.ArgumentParser(description='Simple RPC client')
 parser.add_argument('--port', nargs='?', default=4242, type=int)
 parser.add_argument('--method', nargs='?', default="all", type=str)
+parser.add_argument('--host', nargs='?', default="0.0.0.0", type=str)
 
 args = parser.parse_args()
 logging.basicConfig(filename='client.log',level=logging.DEBUG)
 c = zerorpc.Client()
-addr="tcp://0.0.0.0:{}".format(args.port)
+addr="tcp://{}:{}".format(args.host, args.port)
 print("Connecting to {}".format(addr))
 c.connect(addr)
 method = args.method
